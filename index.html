@@ -1,533 +1,660 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Und CyberWorld - Digital Excellence</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0f172a',
-                        secondary: '#1e293b',
-                        accent: '#3b82f6',
-                        light: '#f8fafc'
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            box-sizing: border-box;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
-        }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .typing-animation {
-            border-right: 2px solid #3b82f6;
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 50% { border-color: #3b82f6; }
-            51%, 100% { border-color: transparent; }
-        }
-        
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Joshua Christopher — Fullstack · Cloud · AI Automation</title>
+
+  <!-- Fonts: Inter for UI, Merriweather for headings -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Merriweather:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (light usage for utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --bg: #fbfaf8;            /* soft whitish paper background */
+      --ink: #0b1520;           /* deep ink */
+      --accent: #2563EB;        /* refined blue accent (less neon, more classical) */
+      --accent-soft: #60A5FA;   /* softer accent for subtle glows */
+      --gold: #B88B3A;          /* antique/gold highlight (sparingly) */
+      --glass: rgba(255,255,255,0.72);
+    }
+
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      -webkit-text-size-adjust:100%;
+    }
+
+    /* very subtle tactile paper */
+    body::before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none;
+      background-image: radial-gradient(rgba(0,0,0,0.01) 1px, transparent 1px);
+      background-size:3px 3px;
+      mix-blend-mode: overlay;
+      opacity:0.55;
+    }
+
+    /* layout container */
+    .site { max-width:1100px; margin:48px auto; padding:0 20px; }
+
+    /* navigation — minimal and light */
+    nav { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; gap:12px; align-items:center; text-decoration:none; color:var(--ink); }
+    .badge {
+      width:44px; height:44px; border-radius:10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-family:Merriweather,serif;
+      box-shadow: 0 10px 30px rgba(37,99,235,0.10);
+    }
+    .nav-links { display:flex; gap:14px; align-items:center; }
+    .nav-links a { color:var(--ink); text-decoration:none; font-weight:600; font-size:14px; }
+    .nav-cta { background:transparent; border:2px solid var(--accent); color:var(--accent); padding:6px 12px; border-radius:9px; font-weight:700; text-decoration:none; }
+
+    /* HERO: improved responsive layout; prevents overflow */
+    .hero {
+      display:flex; gap:28px; align-items:stretch;
+      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.92));
+      border-radius:14px; padding:28px; box-shadow: 0 10px 30px rgba(11,21,32,0.04);
+      border:1px solid rgba(11,21,32,0.03);
+      overflow:hidden;
+    }
+    @media (max-width:1024px){ .hero { flex-direction:column; } }
+
+    .hero-main { flex:1 1 600px; min-width:0; } /* min-width:0 prevents overflow with long text */
+    .hero-side { width:320px; flex:0 0 320px; display:flex; flex-direction:column; gap:12px; align-items:center; }
+    @media (max-width:1024px){ .hero-side { width:100%; flex:auto; } }
+
+    h1 { font-family: 'Merriweather', serif; font-size:30px; margin:0; line-height:1.02; color:var(--ink); }
+    .sub { color:var(--accent); font-weight:700; margin-top:6px; font-size:13px; letter-spacing:0.2px; }
+    .lead { color:rgba(11,21,32,0.78); margin-top:12px; font-size:15px; max-width:60ch; overflow-wrap:break-word; }
+
+    /* typing (smaller, non-overflowing) */
+    .typing { display:inline-block; border-right:2px solid var(--accent); padding-right:6px; margin-left:8px; font-weight:700; color:var(--accent); font-family:Merriweather,serif; font-size:15px; vertical-align:middle; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+
+    /* profile side */
+    .profile-card {
+      width:100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.78));
+      border-radius:12px; padding:14px; display:flex; flex-direction:column; align-items:center; gap:8px;
+      border:1px solid rgba(11,21,32,0.03);
+    }
+    .profile-pic { width:160px; height:160px; border-radius:12px; overflow:hidden; box-shadow: 0 20px 40px rgba(37,99,235,0.06); border:1px solid rgba(11,21,32,0.03); }
+    .profile-pic img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .profile-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:8px; }
+    .btn-ghost { padding:8px 12px; border-radius:10px; background:transparent; border:1px solid rgba(11,21,32,0.06); font-weight:700; color:var(--ink); text-decoration:none; }
+    .btn-primary { padding:8px 12px; border-radius:10px; background:var(--accent); color:#fff; font-weight:700; text-decoration:none; box-shadow: 0 8px 18px rgba(37,99,235,0.08); }
+
+    /* Marquee — subtle and smaller */
+    .marquee-wrap { margin-top:14px; overflow:hidden; transform:skewY(-2deg); border-radius:10px; }
+    .marquee { display:flex; gap:12px; animation:marq 20s linear infinite; padding:8px 4%; }
+    .marq-pill { background:rgba(37,99,235,0.06); color:var(--ink); padding:6px 12px; border-radius:99px; font-weight:700; font-size:13px;}
+    @keyframes marq { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* Projects grid: softer cards, reduced heavy shadows */
+    .projects { margin-top:28px; display:grid; gap:16px; grid-template-columns: repeat(1,1fr); }
+    @media (min-width:640px){ .projects { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width:1024px){ .projects { grid-template-columns: repeat(3,1fr); } }
+
+    .project {
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(254,254,253,0.98));
+      border-radius:12px; padding:12px; border:1px solid rgba(11,21,32,0.03);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .project:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(11,21,32,0.04); }
+    .thumb { height:140px; border-radius:10px; overflow:hidden; background:linear-gradient(180deg,#fff,#fafafa); display:flex; align-items:center; justify-content:center; border:1px solid rgba(11,21,32,0.03); }
+    .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .meta { display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
+    .actions { display:flex; gap:8px; margin-top:10px; }
+
+    /* Contact form — vintage-paper aesthetic, improved UI */
+    .contact-wrap { margin-top:24px; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.96)); border-radius:12px; padding:18px; border:1px solid rgba(11,21,32,0.03); }
+    .contact-header { font-family:Merriweather, serif; font-weight:800; font-size:18px; }
+    .form-grid { display:grid; gap:10px; grid-template-columns:1fr 1fr; margin-top:10px; }
+    @media (max-width:640px){ .form-grid { grid-template-columns: 1fr; } }
+
+    label.vintage { display:block; font-family:Merriweather, serif; font-size:12px; color:rgba(11,21,32,0.6); margin-bottom:6px; }
+    input.vinput, textarea.vinput, select.vinput {
+      width:100%; padding:12px 10px; border-radius:8px; border:1px solid rgba(11,21,32,0.06); background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,248,247,0.98)); font-size:14px; color:var(--ink);
+      box-shadow: inset 0 -6px 18px rgba(255,255,255,0.5);
+    }
+    .submit {
+      display:inline-flex; gap:10px; align-items:center; padding:10px 14px; background:linear-gradient(90deg,var(--gold),var(--accent)); color:white; border-radius:10px; font-weight:800; border:none; cursor:pointer;
+      box-shadow: 0 10px 30px rgba(37,99,235,0.08);
+    }
+
+    /* Footer simpler */
+    footer { margin-top:36px; text-align:center; color:rgba(11,21,32,0.6); font-size:13px; }
+
+    /* Modal fallback small */
+    .modal-root { position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:80; }
+  </style>
 </head>
-<body class="bg-light text-gray-800 font-sans">
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0">
-                    <h1 class="text-xl font-bold text-primary">UND CyberWorld</h1>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="text-gray-700 hover:text-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#services" class="text-gray-700 hover:text-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">Services</a>
-                        <a href="#about" class="text-gray-700 hover:text-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
-                        <a href="#contact" class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Contact</a>
-                    </div>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-accent">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+<body>
+
+  <div class="site">
+    <nav>
+      <a class="brand" href="#home" aria-label="Home">
+        <div class="badge">JC</div>
+        <div>
+          <div style="font-family:Merriweather,serif; font-weight:800;">Joshua Christopher</div>
+          <div style="font-size:12px; color:rgba(11,21,32,0.56); margin-top:2px;">Fullstack · Cloud · AI Automation</div>
         </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block px-3 py-2 text-gray-700 hover:text-accent">Home</a>
-                <a href="#services" class="block px-3 py-2 text-gray-700 hover:text-accent">Services</a>
-                <a href="#about" class="block px-3 py-2 text-gray-700 hover:text-accent">About</a>
-                <a href="#contact" class="block px-3 py-2 text-gray-700 hover:text-accent">Contact</a>
-            </div>
-        </div>
+      </a>
+
+      <div class="nav-links" role="navigation" aria-label="Main links">
+        <a href="#projects">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="nav-cta">Hire</a>
+      </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="gradient-bg min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="floating absolute top-20 left-10 w-20 h-20 bg-accent rounded-full"></div>
-            <div class="floating absolute top-40 right-20 w-16 h-16 bg-blue-300 rounded-full" style="animation-delay: 1s;"></div>
-            <div class="floating absolute bottom-40 left-1/4 w-12 h-12 bg-blue-400 rounded-full" style="animation-delay: 2s;"></div>
+    <!-- HERO -->
+    <header class="hero" id="home" role="banner" aria-labelledby="hero-title">
+      <div class="hero-main">
+        <h1 id="hero-title">Joshua Christopher</h1>
+        <div class="sub">Fullstack · Cloud Engineer · AI Automation Specialist</div>
+
+        <p class="lead">
+          I design and ship dependable systems — product-grade web apps, resilient cloud platforms, and LLM-driven automations that make teams faster and products kinder.
+        </p>
+
+        <p style="margin-top:14px;">
+          I specialize in
+          <span id="typing" class="typing" aria-live="polite"></span>
+        </p>
+
+        <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn-primary" href="#projects">View Work</a>
+          <a class="btn-ghost" href="#about">Experience</a>
         </div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div class="fade-in">
-                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6">
-                    Welcome to <span class="text-accent">UND CyberWorld</span>
-                </h1>
-                <p class="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-                    Transforming businesses through cutting-edge 
-                    <span id="typing-text" class="text-accent typing-animation">Web Development</span>
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <button onclick="scrollToSection('services')" class="bg-accent text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg">
-                        Explore Services
-                    </button>
-                    <button onclick="scrollToSection('contact')" class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-primary transition-all">
-                        Get In Touch
-                    </button>
-                </div>
-            </div>
+
+        <div class="marquee-wrap" aria-hidden="true">
+          <div class="marquee">
+            <div class="marq-pill">React</div>
+            <div class="marq-pill">Terraform</div>
+            <div class="marq-pill">LangChain</div>
+            <div class="marq-pill">Postgres</div>
+            <div class="marq-pill">Serverless</div>
+            <div class="marq-pill">TypeScript</div>
+            <div class="marq-pill">Observability</div>
+            <div class="marq-pill">Automation</div>
+            <div class="marq-pill">React</div>
+            <div class="marq-pill">Terraform</div>
+            <div class="marq-pill">LangChain</div>
+          </div>
         </div>
+      </div>
+
+      <aside class="hero-side">
+        <div class="profile-card" aria-label="Profile">
+          <div class="profile-pic" aria-hidden="false">
+            <img id="profile-photo" src="" alt="Joshua Christopher — profile photo">
+          </div>
+
+          <div style="text-align:center;">
+            <div style="font-weight:800; color:var(--ink);">Available for projects</div>
+            <div style="font-size:13px; color:rgba(11,21,32,0.64); margin-top:6px;">Remote · Contract friendly</div>
+          </div>
+
+          <div class="profile-actions">
+            <a id="github-link" class="btn-ghost" href="https://github.com/Joshua-UND" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a id="linkedin-link" class="btn-ghost" href="https://www.linkedin.com/in/joshuachristopher-und" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </div>
+      </aside>
+    </header>
+
+    <!-- SERVICES -->
+    <section id="services" class="mt-8">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+        <div class="project">
+          <div style="font-weight:800;">Fullstack</div>
+          <div class="muted" style="margin-top:8px;">Product web apps with solid testing and monitoring.</div>
+        </div>
+        <div class="project">
+          <div style="font-weight:800;">Cloud</div>
+          <div class="muted" style="margin-top:8px;">IaC, serverless, containers and cost-conscious designs.</div>
+        </div>
+        <div class="project">
+          <div style="font-weight:800;">AI</div>
+          <div class="muted" style="margin-top:8px;">LLM orchestration and automation-first flows.</div>
+        </div>
+      </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 fade-in">
-                <h2 class="text-4xl sm:text-5xl font-bold text-primary mb-4">Our Specialties</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Delivering excellence across three core domains of digital transformation</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Web Development -->
-                <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-100 p-8 rounded-2xl border border-blue-200">
-                    <div class="text-accent mb-6">
-                        <svg class="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-primary mb-4 text-center">Web Development</h3>
-                    <p class="text-gray-600 text-center mb-6">Creating responsive, fast, and user-friendly websites using modern technologies and best practices.</p>
-                    <ul class="space-y-2 text-sm text-gray-600">
-                        <li class="flex items-center"><span class="text-accent mr-2">✓</span> React & Next.js Applications</li>
-                        <li class="flex items-center"><span class="text-accent mr-2">✓</span> E-commerce Solutions</li>
-                        <li class="flex items-center"><span class="text-accent mr-2">✓</span> Progressive Web Apps</li>
-                        <li class="flex items-center"><span class="text-accent mr-2">✓</span> API Integration</li>
-                    </ul>
-                </div>
-
-                <!-- Cloud Engineering -->
-                <div class="card-hover bg-gradient-to-br from-purple-50 to-pink-100 p-8 rounded-2xl border border-purple-200">
-                    <div class="text-purple-600 mb-6">
-                        <svg class="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-primary mb-4 text-center">Cloud Engineering</h3>
-                    <p class="text-gray-600 text-center mb-6">Scalable cloud infrastructure and DevOps solutions for modern businesses and applications.</p>
-                    <ul class="space-y-2 text-sm text-gray-600">
-                        <li class="flex items-center"><span class="text-purple-600 mr-2">✓</span> AWS & Azure Solutions</li>
-                        <li class="flex items-center"><span class="text-purple-600 mr-2">✓</span> Container Orchestration</li>
-                        <li class="flex items-center"><span class="text-purple-600 mr-2">✓</span> CI/CD Pipelines</li>
-                        <li class="flex items-center"><span class="text-purple-600 mr-2">✓</span> Infrastructure as Code</li>
-                    </ul>
-                </div>
-
-                <!-- Digital Marketing -->
-                <div class="card-hover bg-gradient-to-br from-green-50 to-emerald-100 p-8 rounded-2xl border border-green-200">
-                    <div class="text-green-600 mb-6">
-                        <svg class="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-primary mb-4 text-center">Digital Marketing</h3>
-                    <p class="text-gray-600 text-center mb-6">Data-driven marketing strategies to boost your online presence and drive meaningful engagement.</p>
-                    <ul class="space-y-2 text-sm text-gray-600">
-                        <li class="flex items-center"><span class="text-green-600 mr-2">✓</span> SEO Optimization</li>
-                        <li class="flex items-center"><span class="text-green-600 mr-2">✓</span> Social Media Strategy</li>
-                        <li class="flex items-center"><span class="text-green-600 mr-2">✓</span> Content Marketing</li>
-                        <li class="flex items-center"><span class="text-green-600 mr-2">✓</span> Analytics & Reporting</li>
-                    </ul>
-                </div>
-            </div>
+    <!-- PROJECTS: auto-pin top 3 -->
+    <section id="projects" class="mt-8">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div>
+          <h2 style="font-family:Merriweather,serif; font-weight:800; margin:0;">Selected Projects</h2>
+          <div class="muted" style="margin-top:6px;">Top repositories are auto-pinned for quick preview.</div>
         </div>
+        <div class="muted" style="font-size:13px;">Use left/right arrows to cycle featured</div>
+      </div>
+
+      <!-- featured row -->
+      <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; flex-wrap:wrap;">
+        <div style="flex:1 1 640px; min-width:260px;">
+          <div id="featured-card" style="background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.96)); padding:12px; border-radius:12px; border:1px solid rgba(11,21,32,0.03); box-shadow:0 8px 20px rgba(11,21,32,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div class="muted" style="font-size:12px;">Featured</div>
+                <div id="featured-title" style="font-weight:800; margin-top:6px;">Loading top project…</div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button id="fe-prev" class="btn-ghost">◀</button>
+                <button id="fe-next" class="btn-ghost">▶</button>
+              </div>
+            </div>
+
+            <div id="featured-preview" class="iframe-wrap" style="margin-top:12px;">Attempting live preview…</div>
+            <div id="featured-links" style="display:flex; gap:8px; justify-content:flex-end; margin-top:10px;"></div>
+          </div>
+        </div>
+
+        <div style="width:320px; min-width:260px;">
+          <div style="background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.96)); padding:12px; border-radius:12px; border:1px solid rgba(11,21,32,0.03);">
+            <div style="font-weight:800;">Pinned Projects</div>
+            <div id="pinned-list" style="margin-top:10px; display:flex; flex-direction:column; gap:8px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- grid -->
+      <div id="projects-grid" class="projects"></div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="fade-in">
-                    <h2 class="text-4xl sm:text-5xl font-bold text-primary mb-6">Why Choose UND CyberWorld?</h2>
-                    <p class="text-lg text-gray-600 mb-8">
-                        With years of experience in the digital landscape, we combine technical expertise with creative innovation to deliver solutions that drive real business results.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <div class="bg-accent text-white rounded-full p-2 mr-4 mt-1">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-primary">Expert Team</h4>
-                                <p class="text-gray-600">Skilled professionals with deep industry knowledge</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-accent text-white rounded-full p-2 mr-4 mt-1">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-primary">Cutting-Edge Technology</h4>
-                                <p class="text-gray-600">Latest tools and frameworks for optimal performance</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-accent text-white rounded-full p-2 mr-4 mt-1">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-primary">Results-Driven</h4>
-                                <p class="text-gray-600">Focused on delivering measurable business outcomes</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative">
-                    <div class="bg-gradient-to-br from-accent to-blue-600 rounded-2xl p-8 text-white">
-                        <div class="grid grid-cols-2 gap-6 text-center">
-                            <div>
-                                <div class="text-3xl font-bold mb-2" id="projects-counter">0</div>
-                                <div class="text-blue-100">Projects Completed</div>
-                            </div>
-                            <div>
-                                <div class="text-3xl font-bold mb-2" id="clients-counter">0</div>
-                                <div class="text-blue-100">Happy Clients</div>
-                            </div>
-                            <div>
-                                <div class="text-3xl font-bold mb-2" id="experience-counter">0</div>
-                                <div class="text-blue-100">Years Experience</div>
-                            </div>
-                            <div>
-                                <div class="text-3xl font-bold mb-2">24/7</div>
-                                <div class="text-blue-100">Support</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- ABOUT -->
+    <section id="about" class="mt-8">
+      <div style="display:flex; gap:12px; align-items:start; flex-wrap:wrap;">
+        <div style="flex:1 1 640px;">
+          <h2 style="font-family:Merriweather,serif; font-weight:800;">About</h2>
+          <p class="muted" style="margin-top:8px;">I ship production systems and automations that help teams focus on what matters. I favor careful design, pragmatic tooling, and durable automation.</p>
         </div>
+
+        <aside style="width:260px;">
+          <div style="background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.96)); padding:12px; border-radius:12px; border:1px solid rgba(11,21,32,0.03);">
+            <div style="font-weight:800;">Quick stats</div>
+            <div style="display:flex; gap:12px; margin-top:10px;">
+              <div>
+                <div id="stat-projects" style="font-weight:800; font-size:18px;">0</div>
+                <div class="muted" style="font-size:12px;">Projects</div>
+              </div>
+              <div>
+                <div id="stat-years" style="font-weight:800; font-size:18px;">0</div>
+                <div class="muted" style="font-size:12px;">Years</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 fade-in">
-                <h2 class="text-4xl sm:text-5xl font-bold text-primary mb-4">Let's Work Together</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Ready to transform your digital presence? Get in touch and let's discuss your project.</p>
+    <!-- CONTACT: vintage-styled form -->
+    <section id="contact" class="mt-8">
+      <div class="contact-wrap">
+        <div class="contact-header">Get in touch</div>
+        <div class="muted" style="margin-top:6px;">Prefer email? Use the contact form below and it will prepare a pre-filled message for your mail client.</div>
+
+        <form id="contact-form" style="margin-top:12px;">
+          <div class="form-grid">
+            <div>
+              <label class="vintage">Name</label>
+              <input class="vinput" name="name" required placeholder="Your full name" />
             </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="space-y-8">
-                    <div class="flex items-start">
-                        <div class="bg-accent text-white rounded-lg p-3 mr-4">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-primary text-lg">Email</h4>
-                            <p class="text-gray-600">undcyberworld@gmail.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-start">
-                        <div class="bg-accent text-white rounded-lg p-3 mr-4">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-primary text-lg">Location</h4>
-                            <p class="text-gray-600">Global Remote Services</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-start">
-                        <div class="bg-accent text-white rounded-lg p-3 mr-4">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-primary text-lg">Response Time</h4>
-                            <p class="text-gray-600">Within 24 hours</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <form id="contact-form" class="space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
-                            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Service Needed</label>
-                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
-                            <option>Web Development</option>
-                            <option>Cloud Engineering</option>
-                            <option>Digital Marketing</option>
-                            <option>Full Package</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                        <textarea rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-all"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-accent text-white py-4 rounded-lg text-lg font-semibold hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg">
-                        Send Message
-                    </button>
-                </form>
+            <div>
+              <label class="vintage">Email</label>
+              <input class="vinput" name="email" type="email" required placeholder="you@domain.com" />
             </div>
-        </div>
+          </div>
+
+          <div style="margin-top:10px;">
+            <label class="vintage">Service</label>
+            <select class="vinput" name="service">
+              <option>Fullstack / Web App</option>
+              <option>Cloud / Infra</option>
+              <option>AI Automation</option>
+              <option>Consulting</option>
+            </select>
+          </div>
+
+          <div style="margin-top:10px;">
+            <label class="vintage">Message</label>
+            <textarea class="vinput" name="message" rows="4" placeholder="Tell me about your project..."></textarea>
+          </div>
+
+          <div style="margin-top:12px; display:flex; gap:10px; align-items:center;">
+            <button type="submit" class="submit" id="submit-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M2 12l20-9-9 20-3-8-8-3z" fill="white"/></svg>
+              Send message
+            </button>
+            <div class="muted" style="font-size:13px;">I'll respond quickly — thank you.</div>
+          </div>
+        </form>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="gradient-bg text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold mb-4">UND CyberWorld</h3>
-                <p class="text-gray-300 mb-6">Transforming businesses through digital excellence</p>
-                <div class="flex justify-center space-x-6 mb-8">
-                    <a href="https://x.com/christopher_und?t=FB5xispLfvLIGn_lhNtbqw&s=09" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-accent transition-colors">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.facebook.com/undcyberworld" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-accent transition-colors">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/joshuachristopher-und?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-accent transition-colors">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                    </a>
-                </div>
-                <p class="text-gray-400 text-sm">© 2025 UND CyberWorld. All rights reserved.</p>
-            </div>
-        </div>
+    <footer style="margin-top:28px; text-align:center;">
+      <div style="font-weight:700;">Joshua Christopher</div>
+      <div class="muted" style="margin-top:6px;">Fullstack · Cloud · AI Automation</div>
+      <div class="muted" style="margin-top:8px; font-size:13px;">© <span id="year"></span></div>
     </footer>
+  </div>
 
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
+  <!-- modal root -->
+  <div id="modal-root" class="modal-root" aria-live="polite"></div>
 
-        // Smooth scrolling
-        function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({
-                behavior: 'smooth'
-            });
+  <script>
+    /* ======================================================
+       Improved UI fixes:
+       - Hero overflow fixed by using min-width:0 on main column and fixed side width + responsive stacking
+       - Reduced repeated email: email only appears in Contact form and footer
+       - Accent color refined to var(--accent) and soft variant
+       - Reduced heavy card shadows and gradients; softer borders
+       - Contact form styled with vintage/1900s-inspired labels and a warmer submit button
+       - Projects & featured: live preview attempts with graceful fallback (iframe blocked -> show fallback)
+       ====================================================== */
+
+    const GITHUB_USER = 'Joshua-UND';
+    const MAX_REPOS = 9;
+    const PINNED = 3;
+
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    // set profile pic from GitHub (fallback placeholder)
+    async function setProfile() {
+      try {
+        const r = await fetch(`https://api.github.com/users/${GITHUB_USER}`);
+        if (r.ok) {
+          const data = await r.json();
+          if (data.avatar_url) {
+            $('#profile-photo').src = data.avatar_url;
+          } else {
+            $('#profile-photo').src = 'https://placehold.co/400x400?text=Joshua';
+          }
+        } else {
+          $('#profile-photo').src = 'https://placehold.co/400x400?text=Joshua';
         }
+      } catch (e) {
+        $('#profile-photo').src = 'https://placehold.co/400x400?text=Joshua';
+      }
+    }
 
-        // Add click handlers to navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-                // Close mobile menu if open
-                document.getElementById('mobile-menu').classList.add('hidden');
-            });
-        });
+    // fetch repos and attempt readme image extraction (best-effort)
+    async function fetchRepos() {
+      try {
+        const res = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`);
+        if (!res.ok) throw new Error('GitHub API');
+        const data = await res.json();
+        data.sort((a,b) => (b.stargazers_count - a.stargazers_count) || (new Date(b.pushed_at) - new Date(a.pushed_at)));
+        return data.slice(0, MAX_REPOS);
+      } catch (e) {
+        console.warn('Failed to fetch repos', e);
+        return null;
+      }
+    }
 
-        // Typing animation
-        const typingTexts = ['Web Development', 'Cloud Engineering', 'Digital Marketing'];
-        let currentIndex = 0;
-        let currentText = '';
-        let isDeleting = false;
-        
-        function typeWriter() {
-            const fullText = typingTexts[currentIndex];
-            
-            if (isDeleting) {
-                currentText = fullText.substring(0, currentText.length - 1);
-            } else {
-                currentText = fullText.substring(0, currentText.length + 1);
-            }
-            
-            document.getElementById('typing-text').textContent = currentText;
-            
-            let typeSpeed = isDeleting ? 50 : 100;
-            
-            if (!isDeleting && currentText === fullText) {
-                typeSpeed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && currentText === '') {
-                isDeleting = false;
-                currentIndex = (currentIndex + 1) % typingTexts.length;
-                typeSpeed = 500;
-            }
-            
-            setTimeout(typeWriter, typeSpeed);
+    async function readmeImage(repoName, defaultBranch='main') {
+      try {
+        const r = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${repoName}/readme`);
+        if (!r.ok) return null;
+        const json = await r.json();
+        if (!json.content) return null;
+        const decoded = atob(json.content.replace(/\n/g,''));
+        const m = decoded.match(/!\[[^\]]*]\(([^)]+)\)/i) || decoded.match(/<img[^>]+src=['"]([^'"]+)['"]/i);
+        if (!m) return null;
+        let url = m[1].trim();
+        if (!/^https?:\/\//i.test(url)) {
+          url = url.replace(/^\/+/,'');
+          return `https://raw.githubusercontent.com/${GITHUB_USER}/${repoName}/${defaultBranch}/${url}`;
         }
-        
-        // Start typing animation
-        typeWriter();
+        return url;
+      } catch (e) {
+        return null;
+      }
+    }
 
-        // Counter animation
-        function animateCounter(elementId, target, duration = 2000) {
-            const element = document.getElementById(elementId);
-            const start = 0;
-            const increment = target / (duration / 16);
-            let current = start;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current) + '+';
-            }, 16);
-        }
+    async function buildProjects() {
+      await setProfile();
+      const repos = await fetchRepos();
+      let items = [];
+      if (!repos) {
+        // fallback simple list to avoid empty UI
+        items = [
+          { name:'undcyberworld', desc:'This portfolio (repo)', homepage:'', html_url:`https://github.com/${GITHUB_USER}/undcyberworld`, stars:0, updated:new Date().toISOString(), language:'HTML', image:null },
+          { name:'ai-task-automator', desc:'LLM-driven automations', homepage:'', html_url:'#', stars:0, updated:new Date().toISOString(), language:'Python', image:null },
+          { name:'infra-templates', desc:'Terraform modules', homepage:'', html_url:'#', stars:0, updated:new Date().toISOString(), language:'Terraform', image:null }
+        ];
+        render(items);
+        return;
+      }
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationDelay = '0s';
-                    entry.target.classList.add('fade-in');
-                    
-                    // Trigger counters when about section is visible
-                    if (entry.target.id === 'about') {
-                        animateCounter('projects-counter', 50);
-                        animateCounter('clients-counter', 20);
-                        animateCounter('experience-counter', 5);
-                    }
-                }
-            });
-        }, observerOptions);
-
-        // Observe sections for animations
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
+      // enrich with readme images when available (best-effort)
+      const enriched = [];
+      for (let r of repos) {
+        const img = await readmeImage(r.name, r.default_branch);
+        enriched.push({
+          name: r.name,
+          desc: r.description || '',
+          homepage: r.homepage || '',
+          html_url: r.html_url,
+          stars: r.stargazers_count,
+          updated: r.pushed_at,
+          language: r.language || '',
+          image: img
         });
+      }
+      render(enriched);
+    }
 
-        // Contact form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const name = this.querySelector('input[type="text"]').value;
-            const email = this.querySelector('input[type="email"]').value;
-            const service = this.querySelector('select').value;
-            const message = this.querySelector('textarea').value;
-            
-            // Create mailto link
-            const subject = encodeURIComponent(`New Contact Form Submission - ${service}`);
-            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService Needed: ${service}\n\nMessage:\n${message}`);
-            const mailtoLink = `mailto:undcyberworld@gmail.com?subject=${subject}&body=${body}`;
-            
-            // Open email client
-            window.open(mailtoLink, '_blank');
-            
-            // Show success message
-            const button = this.querySelector('button[type="submit"]');
-            const originalText = button.textContent;
-            button.textContent = 'Opening Email Client... ✓';
-            button.classList.add('bg-green-600');
-            
-            // Reset form
-            this.reset();
-            
-            // Reset button after 3 seconds
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.classList.remove('bg-green-600');
-            }, 3000);
-        });
+    // UI helpers
+    function render(items) {
+      // pinned top
+      const pinned = items.slice(0, PINNED);
+      setupFeatured(pinned);
 
-        // Add scroll effect to navbar
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg');
-            } else {
-                nav.classList.remove('shadow-lg');
-            }
+      // projects grid
+      const grid = $('#projects-grid');
+      grid.innerHTML = '';
+      items.forEach(it => {
+        const card = document.createElement('article');
+        card.className = 'project';
+        card.innerHTML = `
+          <div class="thumb">${it.image ? `<img src="${it.image}" alt="${it.name} screenshot" />` : `<div class="muted">No image</div>`}</div>
+          <div style="margin-top:8px;">
+            <div style="font-weight:700;">${escapeHtml(it.name)}</div>
+            <div class="muted" style="margin-top:6px;">${escapeHtml(it.desc || '')}</div>
+            <div class="meta">
+              <div class="muted" style="font-size:12px;">${it.language ? it.language.toUpperCase() : ''}</div>
+              <div class="muted" style="font-size:12px;">★ ${it.stars || 0}</div>
+            </div>
+            <div class="actions">
+              ${ it.homepage ? `<button class="btn-primary preview-btn" data-home="${escapeHtml(it.homepage)}" data-name="${escapeHtml(it.name)}">Live</button>` : '' }
+              <a class="btn-ghost" href="${it.html_url}" target="_blank" rel="noopener noreferrer">Source</a>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // attach preview handlers
+      $$('.preview-btn').forEach(b => {
+        b.addEventListener('click', () => {
+          openModal({ homepage: b.dataset.home, html_url: null, name: b.dataset.name });
         });
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98ade8a607beef31',t:'MTc1OTg0NTQ1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+      });
+
+      // stats
+      $('#stat-projects').textContent = items.length;
+      $('#stat-years').textContent = 5;
+    }
+
+    /* Featured carousel */
+    let FEATURED = [];
+    let fi = 0;
+    function setupFeatured(pinned) {
+      FEATURED = pinned;
+      const list = $('#pinned-list'); list.innerHTML = '';
+      pinned.forEach((p, idx) => {
+        const row = document.createElement('div');
+        row.style.display = 'flex'; row.style.justifyContent = 'space-between'; row.style.alignItems = 'center';
+        row.innerHTML = `<div style="font-weight:700;">${escapeHtml(p.name)}</div><div><a class="btn-ghost" href="${p.html_url}" target="_blank">Source</a></div>`;
+        row.addEventListener('click', () => { fi = idx; renderFeatured(); });
+        list.appendChild(row);
+      });
+
+      $('#fe-prev').onclick = () => { fi = (fi - 1 + FEATURED.length) % FEATURED.length; renderFeatured(); };
+      $('#fe-next').onclick = () => { fi = (fi + 1) % FEATURED.length; renderFeatured(); };
+
+      // keyboard left/right
+      window.addEventListener('keydown', (e) => {
+        if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+        if (e.key === 'ArrowLeft') $('#fe-prev').click();
+        if (e.key === 'ArrowRight') $('#fe-next').click();
+      });
+
+      renderFeatured();
+    }
+
+    function renderFeatured() {
+      const wrap = $('#featured-preview'); wrap.innerHTML = '';
+      const title = $('#featured-title');
+      if (!FEATURED || FEATURED.length === 0) {
+        title.textContent = 'No featured projects';
+        wrap.innerHTML = `<div class="muted">No preview</div>`;
+        $('#featured-links').innerHTML = '';
+        return;
+      }
+      const p = FEATURED[fi];
+      title.textContent = p.name;
+      $('#featured-links').innerHTML = `${p.homepage ? `<a class="btn-primary" href="${p.homepage}" target="_blank">Open Live</a>` : ''} <a class="btn-ghost" href="${p.html_url}" target="_blank">Source</a>`;
+
+      if (p.homepage && /^https?:\/\//i.test(p.homepage)) {
+        const iframe = document.createElement('iframe');
+        iframe.src = p.homepage;
+        iframe.style.width = '100%'; iframe.style.height = '100%'; iframe.style.border = '0';
+        iframe.loading = 'lazy';
+        let loaded = false;
+        const t = setTimeout(() => { if (!loaded) showFeaturedFallback(p); }, 3500);
+        iframe.addEventListener('load', () => { loaded = true; clearTimeout(t); wrap.innerHTML = ''; wrap.appendChild(iframe); });
+        wrap.appendChild(iframe);
+      } else if (p.image) {
+        const img = document.createElement('img'); img.src = p.image; img.style.width='100%'; img.style.height='100%'; img.style.objectFit='cover';
+        wrap.appendChild(img);
+      } else {
+        showFeaturedFallback(p);
+      }
+    }
+
+    function showFeaturedFallback(p) {
+      $('#featured-preview').innerHTML = `<div style="padding:18px; text-align:center;"><div style="font-weight:700;">Preview unavailable</div><div class="muted" style="margin-top:8px;">Open the project to view live demo or source.</div></div>`;
+    }
+
+    /* Modal + focus trap (simple) */
+    let lastActive = null;
+    function openModal({ homepage, html_url, name }) {
+      lastActive = document.activeElement;
+      const root = $('#modal-root');
+      root.style.display = 'flex';
+      root.innerHTML = `
+        <div style="position:fixed; inset:0; background:rgba(2,6,23,0.5); display:flex; align-items:center; justify-content:center; z-index:90;">
+          <div style="width:95%; max-width:1000px; background:white; border-radius:12px; overflow:hidden; outline:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-bottom:1px solid rgba(11,21,32,0.03);">
+              <div><div class="muted" style="font-size:12px;">Project</div><div style="font-weight:800;">${escapeHtml(name)}</div></div>
+              <div style="display:flex; gap:8px; align-items:center;">
+                ${homepage ? `<a class="btn-primary" href="${homepage}" target="_blank">Open Live</a>` : ''}
+                ${html_url ? `<a class="btn-ghost" href="${html_url}" target="_blank">Source</a>` : ''}
+                <button id="close-modal" class="btn-ghost">Close</button>
+              </div>
+            </div>
+            <div style="padding:12px;">
+              <div id="modal-frame" style="height:60vh; border-radius:8px; overflow:hidden; background:linear-gradient(180deg,#fff,#f7fbff); display:flex; align-items:center; justify-content:center;">
+                <div class="muted">Attempting to load preview…</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      // load iframe
+      const frame = document.getElementById('modal-frame');
+      if (homepage && /^https?:\/\//i.test(homepage)) {
+        const iframe = document.createElement('iframe');
+        iframe.src = homepage; iframe.style.width='100%'; iframe.style.height='100%'; iframe.style.border='0'; iframe.loading='lazy';
+        let loaded=false;
+        const to = setTimeout(()=>{ if(!loaded) frame.innerHTML = `<div class="muted">Preview blocked / timed out. Use Open Live or Source.</div>`; }, 4500);
+        iframe.addEventListener('load', ()=>{ loaded=true; clearTimeout(to); frame.innerHTML=''; frame.appendChild(iframe); });
+        frame.appendChild(iframe);
+      } else {
+        frame.innerHTML = `<div class="muted">No homepage available to embed. Use Source link.</div>`;
+      }
+
+      // close handler & basic focus restore
+      $('#close-modal').addEventListener('click', closeModal);
+      // click backdrop to close
+      root.firstElementChild.addEventListener('click', (e)=>{ if (e.target === root.firstElementChild) closeModal(); });
+      // Esc to close
+      window.addEventListener('keydown', escClose);
+    }
+
+    function closeModal(){
+      const root = $('#modal-root');
+      root.style.display = 'none';
+      root.innerHTML = '';
+      if (lastActive && typeof lastActive.focus === 'function') lastActive.focus();
+      window.removeEventListener('keydown', escClose);
+    }
+    function escClose(e){ if (e.key === 'Escape') closeModal(); }
+
+    // typing animation (non-overflowing)
+    const typingEl = document.getElementById('typing');
+    const words = ['Fullstack Engineering','Cloud Infrastructure','AI Automation'];
+    let wi = 0, pos = 0, deleting=false;
+    function tick(){
+      const w = words[wi];
+      if (!deleting) {
+        pos++; typingEl.textContent = w.slice(0,pos);
+        if (pos === w.length) { deleting=true; setTimeout(tick,1200); return; }
+      } else {
+        pos--; typingEl.textContent = w.slice(0,pos);
+        if (pos === 0) { deleting=false; wi = (wi+1)%words.length; }
+      }
+      setTimeout(tick, deleting ? 60 : 100);
+    }
+    setTimeout(tick,600);
+
+    // contact form -> mailto prefill
+    document.getElementById('contact-form').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const f = e.target;
+      const name = f.name.value || '';
+      const email = f.email.value || '';
+      const service = f.service.value || '';
+      const message = f.message.value || '';
+      const subject = encodeURIComponent(`Inquiry: ${service}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+      window.open(`mailto:undcyberworld@gmail.com?subject=${subject}&body=${body}`, '_blank');
+    });
+
+    // small helpers
+    function escapeHtml(s) { return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // initialize
+    buildProjects();
+  </script>
+</body>
 </html>
